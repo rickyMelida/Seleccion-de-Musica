@@ -2,13 +2,27 @@ package ventanas;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class agregar extends javax.swing.JFrame {
-
+    
+    
     public agregar() {
         initComponents();
     }
-
+    
+    public static boolean esNumero(String cadena) {
+        boolean resultado;
+        
+        try{
+            Integer.parseInt(cadena);
+            resultado = true;
+        }catch(NumberFormatException Exception) {
+            resultado = false;
+        }
+        
+        return resultado;
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -143,15 +157,32 @@ public class agregar extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_volverActionPerformed
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
+        
+        String[] datos = new String[5];
+        int minutos;
+        int segundos;
+        String duracion = txt_duracion.getText();
+        for (int i = 0; i < duracion.length(); i++) {
+            datos[i] = String.valueOf(duracion.charAt(i));
+        }
+        minutos = Integer.parseInt(datos[0] + datos[1]);
+        segundos = Integer.parseInt(datos[3] +  datos[4]);
+                
         try {
             PreparedStatement pst = db.prepareStatement("INSERT INTO musicas(artista, titulo, estilo, minutos, segundos) VALUES(?,?,?,?,?)");
             pst.setString(1, txt_artista.getText());
             pst.setString(2, txt_titulo.getText());
             pst.setString(3, txt_estilo.getText());
-           
+            pst.setInt(4, minutos);
+            pst.setInt(5, segundos);
+            pst.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Se agregó la cancion a la Base de Datos");
         } catch (SQLException ex) {
-            Logger.getLogger(agregar.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(agregar.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al cargar, " + ex);
         }
+        
     }//GEN-LAST:event_btn_guardarActionPerformed
 
 
