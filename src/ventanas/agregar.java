@@ -1,4 +1,7 @@
 package ventanas;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class agregar extends javax.swing.JFrame {
 
@@ -50,6 +53,11 @@ public class agregar extends javax.swing.JFrame {
         });
 
         btn_guardar.setText("Guardar");
+        btn_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_guardarActionPerformed(evt);
+            }
+        });
 
         btn_volver.setText("Volver");
         btn_volver.addActionListener(new java.awt.event.ActionListener() {
@@ -134,6 +142,18 @@ public class agregar extends javax.swing.JFrame {
         princ.setLocationRelativeTo(null);
     }//GEN-LAST:event_btn_volverActionPerformed
 
+    private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
+        try {
+            PreparedStatement pst = db.prepareStatement("INSERT INTO musicas(artista, titulo, estilo, minutos, segundos) VALUES(?,?,?,?,?)");
+            pst.setString(1, txt_artista.getText());
+            pst.setString(2, txt_titulo.getText());
+            pst.setString(3, txt_estilo.getText());
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(agregar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_guardarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_guardar;
@@ -149,4 +169,7 @@ public class agregar extends javax.swing.JFrame {
     private javax.swing.JTextField txt_estilo;
     private javax.swing.JTextField txt_titulo;
     // End of variables declaration//GEN-END:variables
+
+    conectar bd = new conectar();
+    Connection db = bd.conexion();
 }
