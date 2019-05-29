@@ -13,6 +13,19 @@ public class listas extends javax.swing.JFrame {
         mostrarCanciones("");
     }
     
+    public static boolean esNumero(String cadena) {
+        boolean resultado;
+        
+        try{
+            Integer.parseInt(cadena);
+            resultado = true;
+        }catch(NumberFormatException Exception) {
+            resultado = false;
+        }
+        
+        return resultado;
+    }
+    
     public void mostrarCanciones(String valor) {
         DefaultTableModel tabla = new DefaultTableModel();
         tabla.addColumn("N°");
@@ -281,13 +294,12 @@ public class listas extends javax.swing.JFrame {
         
         for (int i = 0; i < 5; i++) {
             datos[i] = (String)tabla_datos.getValueAt(fila, i);
-            
-            //System.out.println("EL dato es : " + datos[i]);
         }
         artista_modificado.setText(datos[1]);
         titulo_modificado.setText(datos[2]);
         estilo_modificado.setText(datos[3]);
         duracion_modificado.setText(datos[4]);
+        
         id = datos[0];
         
     }//GEN-LAST:event_btn_modificarActionPerformed
@@ -301,7 +313,6 @@ public class listas extends javax.swing.JFrame {
     }//GEN-LAST:event_duracion_modificadoActionPerformed
 
     private void btn_grabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_grabarActionPerformed
-        //System.out.println("El id es " + id);
         String[] dura = new String[5];
         
         String duracion = duracion_modificado.getText();
@@ -310,18 +321,37 @@ public class listas extends javax.swing.JFrame {
             dura[i] = String.valueOf(duracion.charAt(i));
         }
         
-        minutos = Integer.parseInt(dura[0]);
-        segundos = Integer.parseInt(dura[2] +  dura[3]);
+        /*Si el minuto de duracion es menor a 10*/
+        if(dura[1].equals(":")){
+            minutos = Integer.parseInt("0" + dura[0]);
+            if(duracion.length() >= 4) {
+                segundos = Integer.parseInt(dura[2] + dura[3]);
+            }else {
+                segundos = Integer.parseInt("0" + dura[2]);
+            }
+        }
         
-         System.out.println("el tiempo es " + minutos + ":" + segundos);
+        if(dura[2].equals(":")) {
+            minutos = Integer.parseInt(dura[0] + dura[1]);
+            if(duracion.length() >= 5) {
+                segundos = Integer.parseInt(dura[3] + dura[4]);
+            }else {
+                segundos = Integer.parseInt("0" + dura[3]);
+            }
+        }
+        
+       // minutos = Integer.parseInt(dura[0]);
+       // segundos = Integer.parseInt(dura[2] +  dura[3]);
+        
         try {
             PreparedStatement pst = db.prepareStatement("UPDATE musicas SET artista= '" + artista_modificado.getText() + "',titulo='" + titulo_modificado.getText() + "',estilo='" + estilo_modificado.getText() + "',minutos='" + minutos + "',segundos='" + segundos + "' WHERE id_musica='" + id + "'");
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null, "Se modificó la cancion correctamente");
             mostrarCanciones("");
+            
         } catch (SQLException ex) {
             //java.util.logging.Logger.getLogger(listas.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Error al modificar la cancion, " + ex);
+            JOptionPane.showMessageDialog(null, "Error al modificar la canción, " + ex);
         }
     }//GEN-LAST:event_btn_grabarActionPerformed
 
