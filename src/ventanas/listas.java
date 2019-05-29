@@ -295,6 +295,7 @@ public class listas extends javax.swing.JFrame {
         for (int i = 0; i < 5; i++) {
             datos[i] = (String)tabla_datos.getValueAt(fila, i);
         }
+        
         artista_modificado.setText(datos[1]);
         titulo_modificado.setText(datos[2]);
         estilo_modificado.setText(datos[3]);
@@ -305,7 +306,19 @@ public class listas extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_modificarActionPerformed
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-        // TODO add your handling code here:
+        int fila = tabla_datos.getSelectedRow();
+        String cod = tabla_datos.getValueAt(fila, 0).toString();
+        
+        try {
+            PreparedStatement rm = db.prepareStatement("DELETE FROM musicas WHERE id_musica='" + cod + "'");
+            rm.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Se elimino la musica de la base de datos");
+            mostrarCanciones("");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar la musica, " + ex);
+            
+            //java.util.logging.Logger.getLogger(listas.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
     private void duracion_modificadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_duracion_modificadoActionPerformed
@@ -339,9 +352,6 @@ public class listas extends javax.swing.JFrame {
                 segundos = Integer.parseInt("0" + dura[3]);
             }
         }
-        
-       // minutos = Integer.parseInt(dura[0]);
-       // segundos = Integer.parseInt(dura[2] +  dura[3]);
         
         try {
             PreparedStatement pst = db.prepareStatement("UPDATE musicas SET artista= '" + artista_modificado.getText() + "',titulo='" + titulo_modificado.getText() + "',estilo='" + estilo_modificado.getText() + "',minutos='" + minutos + "',segundos='" + segundos + "' WHERE id_musica='" + id + "'");
