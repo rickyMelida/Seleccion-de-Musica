@@ -162,11 +162,17 @@ public class agregar extends javax.swing.JFrame {
         int minutos;
         int segundos;
         String duracion = txt_duracion.getText();
+        if(duracion.length() < 5){
+            JOptionPane.showMessageDialog(null,"El formato de duracion es mm:ss" );
+            txt_duracion.setText("");
+        }
         for (int i = 0; i < duracion.length(); i++) {
             datos[i] = String.valueOf(duracion.charAt(i));
         }
         minutos = Integer.parseInt(datos[0] + datos[1]);
         segundos = Integer.parseInt(datos[3] +  datos[4]);
+        
+        
                 
         try {
             PreparedStatement pst = db.prepareStatement("INSERT INTO musicas(artista, titulo, estilo, minutos, segundos) VALUES(?,?,?,?,?)");
@@ -178,6 +184,10 @@ public class agregar extends javax.swing.JFrame {
             pst.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Se agregó la cancion a la Base de Datos");
+            txt_artista.setText("");
+            txt_titulo.setText("");
+            txt_estilo.setText("");
+            txt_duracion.setText("");
         } catch (SQLException ex) {
             //Logger.getLogger(agregar.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Error al cargar, " + ex);
