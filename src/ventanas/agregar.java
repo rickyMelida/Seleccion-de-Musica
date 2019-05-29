@@ -140,7 +140,7 @@ public class agregar extends javax.swing.JFrame {
                 .addGap(24, 24, 24))
         );
 
-        getContentPane().add(panel_principal, java.awt.BorderLayout.CENTER);
+        getContentPane().add(panel_principal, java.awt.BorderLayout.PAGE_START);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -171,7 +171,6 @@ public class agregar extends javax.swing.JFrame {
         }
         minutos = Integer.parseInt(datos[0] + datos[1]);
         segundos = Integer.parseInt(datos[3] +  datos[4]);
-        
         
                 
         try {
