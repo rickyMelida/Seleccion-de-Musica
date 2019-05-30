@@ -158,19 +158,51 @@ public class agregar extends javax.swing.JFrame {
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         
-        String[] datos = new String[5];
-        int minutos;
-        int segundos;
+        
+        
+        String[] dura = new String[5];
+        int minutos = 0;
+        int segundos = 0;
         String duracion = txt_duracion.getText();
+        
+        for (int i = 0; i < duracion.length(); i++) {
+            dura[i] = String.valueOf(duracion.charAt(i));
+        }
+        
+        /*Si el minuto de duracion es menor a 10*/
+        if(dura[1].equals(":")){
+            minutos = Integer.parseInt("0" + dura[0]);
+            if(duracion.length() >= 4) {
+                segundos = Integer.parseInt(dura[2] + dura[3]);
+            }else {
+                segundos = Integer.parseInt("0" + dura[2]);
+            }
+        }
+        
+        if(dura[2].equals(":")) {
+            minutos = Integer.parseInt(dura[0] + dura[1]);
+            if(duracion.length() >= 5) {
+                segundos = Integer.parseInt(dura[3] + dura[4]);
+            }else {
+                segundos = Integer.parseInt("0" + dura[3]);
+            }
+        }
+        
+        /*
+        String[] datos = new String[5];
+        
+        String duracion = txt_duracion.getText();
+        
         if(duracion.length() < 5){
             JOptionPane.showMessageDialog(null,"El formato de duracion es mm:ss" );
             txt_duracion.setText("");
         }
+        
         for (int i = 0; i < duracion.length(); i++) {
             datos[i] = String.valueOf(duracion.charAt(i));
         }
         minutos = Integer.parseInt(datos[0] + datos[1]);
-        segundos = Integer.parseInt(datos[3] +  datos[4]);
+        segundos = Integer.parseInt(datos[3] +  datos[4]);*/
         
                 
         try {
