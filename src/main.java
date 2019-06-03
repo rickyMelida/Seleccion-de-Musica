@@ -7,6 +7,7 @@ public class main {
         principal princ = new principal();
         princ.setVisible(true);
         princ.setLocationRelativeTo(null);
+        princ.setTitle("Seleccion Musical");
     }
     
 }
