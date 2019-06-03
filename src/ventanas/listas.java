@@ -40,7 +40,7 @@ public class listas extends javax.swing.JFrame {
         if(valor == "" ) {
             sql = "SELECT * FROM musicas";
         }else {
-            sql = "SELECT * FROM musicas WHERE titulo = '" + valor + "'"; 
+            sql = "SELECT '" + valor + "' FROM musicas "; 
         }
         
         String [] datos = new String[6];
@@ -235,7 +235,7 @@ public class listas extends javax.swing.JFrame {
             }
         });
 
-        seleccionador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Artista", "Titulo", "Estilo", "Duracion" }));
+        seleccionador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "artista", "titulo", "estilo" }));
         seleccionador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 seleccionadorActionPerformed(evt);
@@ -265,7 +265,7 @@ public class listas extends javax.swing.JFrame {
                         .addGap(118, 118, 118)
                         .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         panel_principalLayout.setVerticalGroup(
             panel_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,7 +276,7 @@ public class listas extends javax.swing.JFrame {
                     .addComponent(seleccionador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(panel_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -399,7 +399,8 @@ public class listas extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_regresarActionPerformed
 
     private void seleccionadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionadorActionPerformed
-        System.out.println("Se selecciono" + seleccionador.getSelectedItem());
+        //System.out.println("Se selecciono" + seleccionador.getSelectedItem());
+        mostrarCanciones((String) seleccionador.getSelectedItem());
     }//GEN-LAST:event_seleccionadorActionPerformed
 
     
