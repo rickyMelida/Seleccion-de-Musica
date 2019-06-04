@@ -10,7 +10,7 @@ public class listas extends javax.swing.JFrame {
     
     public listas() {
         initComponents();
-        mostrarCanciones("");
+        mostrarCanciones("", "");
     }
     
     public static boolean esNumero(String cadena) {
@@ -26,7 +26,7 @@ public class listas extends javax.swing.JFrame {
         return resultado;
     }
     
-    public void mostrarCanciones(String valor) {
+    public void mostrarCanciones(String columna, String nombre) {
         DefaultTableModel tabla = new DefaultTableModel();
         tabla.addColumn("N°");
         tabla.addColumn("Artista");
@@ -37,10 +37,10 @@ public class listas extends javax.swing.JFrame {
         
         String sql = "";
         
-        if(valor == "" ) {
+        if(nombre == "" || columna == "") {
             sql = "SELECT * FROM musicas";
         }else {
-            sql = "SELECT '" + valor + "' FROM musicas "; 
+            sql = "SELECT * FROM musicas WHERE " + columna + " = '" + nombre + "';" ; 
         }
         
         String [] datos = new String[6];
@@ -90,6 +90,8 @@ public class listas extends javax.swing.JFrame {
         btn_eliminar = new javax.swing.JButton();
         seleccionador = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
+        nombre = new javax.swing.JTextField();
+        btn_buscar = new javax.swing.JButton();
 
         duracion_modificado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,6 +237,7 @@ public class listas extends javax.swing.JFrame {
             }
         });
 
+        seleccionador.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         seleccionador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "artista", "titulo", "estilo" }));
         seleccionador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -243,7 +246,15 @@ public class listas extends javax.swing.JFrame {
         });
 
         jLabel7.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        jLabel7.setText("Ver por:");
+        jLabel7.setText("Buscar por:");
+
+        btn_buscar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btn_buscar.setText("Buscar");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel_principalLayout = new javax.swing.GroupLayout(panel_principal);
         panel_principal.setLayout(panel_principalLayout);
@@ -251,21 +262,26 @@ public class listas extends javax.swing.JFrame {
             panel_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_principalLayout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addGroup(panel_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panel_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(panel_principalLayout.createSequentialGroup()
+                            .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(117, 117, 117)
+                            .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(118, 118, 118)
+                            .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1))
                     .addGroup(panel_principalLayout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61)
+                        .addGap(30, 30, 30)
                         .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(seleccionador, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panel_principalLayout.createSequentialGroup()
-                        .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(117, 117, 117)
-                        .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(118, 118, 118)
-                        .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
-                .addContainerGap(44, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(seleccionador, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_buscar)))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         panel_principalLayout.setVerticalGroup(
             panel_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,9 +290,11 @@ public class listas extends javax.swing.JFrame {
                 .addGroup(panel_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(seleccionador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_buscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(panel_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -342,7 +360,7 @@ public class listas extends javax.swing.JFrame {
             PreparedStatement rm = db.prepareStatement("DELETE FROM musicas WHERE id_musica='" + cod + "'");
             rm.executeUpdate();
             JOptionPane.showMessageDialog(null, "Se elimino la musica de la base de datos");
-            mostrarCanciones("");
+            mostrarCanciones("", "");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al eliminar la musica, " + ex);
             
@@ -386,7 +404,7 @@ public class listas extends javax.swing.JFrame {
             PreparedStatement pst = db.prepareStatement("UPDATE musicas SET artista= '" + artista_modificado.getText() + "',titulo='" + titulo_modificado.getText() + "',estilo='" + estilo_modificado.getText() + "',minutos='" + minutos + "',segundos='" + segundos + "' WHERE id_musica='" + id + "'");
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null, "Se modificó la cancion correctamente");
-            mostrarCanciones("");
+            mostrarCanciones("", "");
             
         } catch (SQLException ex) {
             //java.util.logging.Logger.getLogger(listas.class.getName()).log(Level.SEVERE, null, ex);
@@ -399,14 +417,21 @@ public class listas extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_regresarActionPerformed
 
     private void seleccionadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionadorActionPerformed
-        //System.out.println("Se selecciono" + seleccionador.getSelectedItem());
-        mostrarCanciones((String) seleccionador.getSelectedItem());
+       
     }//GEN-LAST:event_seleccionadorActionPerformed
+
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        System.out.println("el selector es " + seleccionador.getSelectedItem().toString());
+        System.out.println("El nombre a buscar es " + nombre.getText());
+        //mostrarCanciones("artista", "Barak");
+        mostrarCanciones(seleccionador.getSelectedItem().toString(), nombre.getText());
+    }//GEN-LAST:event_btn_buscarActionPerformed
 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField artista_modificado;
+    private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_eliminar;
     private javax.swing.JButton btn_grabar;
     private javax.swing.JButton btn_modificar;
@@ -423,6 +448,7 @@ public class listas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JDialog modificar;
+    private javax.swing.JTextField nombre;
     private javax.swing.JPanel panel_principal;
     private javax.swing.JComboBox<String> seleccionador;
     private javax.swing.JTable tabla_datos;
