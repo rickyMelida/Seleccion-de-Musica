@@ -57,6 +57,11 @@ public class principal extends javax.swing.JFrame {
         });
 
         btn_aleatorio.setText("PlayList Aleatorio");
+        btn_aleatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_aleatorioActionPerformed(evt);
+            }
+        });
 
         btn_manual.setText("Crear PlayList");
 
@@ -118,7 +123,6 @@ public class principal extends javax.swing.JFrame {
 
     private void btn_verActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_verActionPerformed
         listas ver_listas = new listas();
-        
         ver_listas.setVisible(true);
         ver_listas.setLocationRelativeTo(null);
         this.setVisible(false);
@@ -130,6 +134,13 @@ public class principal extends javax.swing.JFrame {
         add.setVisible(true);
         add.setLocationRelativeTo(null);
     }//GEN-LAST:event_btn_agregarActionPerformed
+
+    private void btn_aleatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aleatorioActionPerformed
+        resultado res  = new resultado();
+        res.setVisible(true);
+        res.setLocationRelativeTo(null);
+        res.setTitle("Resultado aleatorio");
+    }//GEN-LAST:event_btn_aleatorioActionPerformed
 
     
 
