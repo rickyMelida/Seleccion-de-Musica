@@ -421,10 +421,12 @@ public class listas extends javax.swing.JFrame {
     }//GEN-LAST:event_seleccionadorActionPerformed
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-        System.out.println("el selector es " + seleccionador.getSelectedItem().toString());
-        System.out.println("El nombre a buscar es " + nombre.getText());
-        //mostrarCanciones("artista", "Barak");
-        mostrarCanciones(seleccionador.getSelectedItem().toString(), nombre.getText());
+      
+        if(nombre.getText() == "" || nombre.getText() == "Todos"){
+            mostrarCanciones("", "");
+        }else {
+            mostrarCanciones(seleccionador.getSelectedItem().toString(), nombre.getText());
+        }
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     
