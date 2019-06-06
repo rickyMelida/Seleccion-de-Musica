@@ -322,6 +322,7 @@ public class listas extends javax.swing.JFrame {
         this.setVisible(false);
         princ.setVisible(true);
         princ.setLocationRelativeTo(null);
+        princ.setTitle("Seleccion Musical");
     }//GEN-LAST:event_btn_volverActionPerformed
 
     private void tabla_datosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_datosMouseClicked
