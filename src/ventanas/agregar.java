@@ -153,6 +153,7 @@ public class agregar extends javax.swing.JFrame {
         principal princ = new principal();
         this.setVisible(false);
         princ.setVisible(true);
+        princ.setTitle("Seleccion Musical");
         princ.setLocationRelativeTo(null);
     }//GEN-LAST:event_btn_volverActionPerformed
 
@@ -188,23 +189,7 @@ public class agregar extends javax.swing.JFrame {
             }
         }
         
-        /*
-        String[] datos = new String[5];
         
-        String duracion = txt_duracion.getText();
-        
-        if(duracion.length() < 5){
-            JOptionPane.showMessageDialog(null,"El formato de duracion es mm:ss" );
-            txt_duracion.setText("");
-        }
-        
-        for (int i = 0; i < duracion.length(); i++) {
-            datos[i] = String.valueOf(duracion.charAt(i));
-        }
-        minutos = Integer.parseInt(datos[0] + datos[1]);
-        segundos = Integer.parseInt(datos[3] +  datos[4]);*/
-        
-                
         try {
             PreparedStatement pst = db.prepareStatement("INSERT INTO musicas(artista, titulo, estilo, minutos, segundos) VALUES(?,?,?,?,?)");
             pst.setString(1, txt_artista.getText());
