@@ -130,6 +130,7 @@ public class principal extends javax.swing.JFrame {
         res.setLocationRelativeTo(null);
         res.setTitle("Resultados");
         res.setTitle("Resultado aleatorio");
+        this.setVisible(false);
     }//GEN-LAST:event_btn_aleatorioActionPerformed
 
     
