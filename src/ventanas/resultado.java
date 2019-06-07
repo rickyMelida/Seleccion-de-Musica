@@ -102,49 +102,90 @@ public class resultado extends javax.swing.JFrame {
         tabla.addColumn("Duración");
         tabla_resultados.setModel(tabla);
         
-        String estilo = "Lento";
-        String sql = "SELECT * FROM musicas";
-        String ale_sql = "SELECT * FROM musicas WHERE estilo = '" + estilo + "' ORDER BY RAND() LIMIT 4";
         String [] datos = new String[6];
+        String estilo = "Lento", estilo_2 = "Romantico";
         
-        int madrugada = 300;/* Tiempo total en minutos para el horario de la madrugada*/
+        
+        int temprano = 240;/* Tiempo total en minutos para el horario de la madrugada*/
+        int mañana = 360;/* Tiempo total en minutos para el horario de la madrugada*/
         int tiempo_total = 1430;/*Esto correspomderia a 23hs 50min*/
+        
         int sum_seg = 0, sum_min = 0, min = 0, total_min = 0;
 
         
         try{
-            Statement st = db.createStatement();
-            ResultSet res = st.executeQuery(ale_sql);
             
-            /*Se repite extrayendo todos los datos*/
-            while(res.next()) {
+            while(total_min <= tiempo_total) {
+                String ale_sql = "SELECT * FROM musicas WHERE estilo = '" + estilo + "' || estilo = '" + estilo_2 + "' ORDER BY RAND()";
+            
+                Statement st = db.createStatement();
+                ResultSet res = st.executeQuery(ale_sql);
                 
-                datos[0] = res.getString(1);
-                datos[1] = res.getString(2);
-                datos[2] = res.getString(3);
-                datos[3] = res.getString(4);
-                datos[4] = res.getString(5) + ":" + res.getString(6); /*Se concatenan los minutos y segundos*/
                 
-                tabla.addRow(datos);
-                
-                /*Sumamos consecutivamente los segundos*/
-                sum_seg = Integer.parseInt(res.getString(6)) + sum_seg; 
-                
-                /*Si la cantidad de segundos es igual o supera 60
-                  sumamos un minuto y restamos la suma de segundos entre 60*/
-                if(sum_seg >= 60){
-                    min ++ ; 
-                    sum_seg = sum_seg - 60;                    
+                switch(total_min){
+                    case 240: {
+                        estilo="Polka";
+                    }
+                    break;
+                    
+                    case 360: {
+                        estilo="Movido";
+                    }
+                    break;
+                    
+                    case 720: {
+                        estilo = "Lento";
+                    }
+                    break;
+                    
+                    case 780: {
+                        estilo = "Lento";
+                    }
+                    break;
+                    
+                    case 900: {
+                        estilo = "Movido";
+                    }
+                    break;
+                    
+                    case 1200: {
+                        estilo = "Movido";
+                    }
+                    break;
                 }
-                /*Sumamos consecutivamente los minutos*/
-                sum_min = Integer.parseInt(res.getString(5)) + sum_min;
                 
-                /*Sumamos el total de minutos*/
-                total_min = sum_min + min;
+            
+                /*Se repite extrayendo todos los datos*/
+                while(res.next()) {
+                
+                    datos[0] = res.getString(1);
+                    datos[1] = res.getString(2);
+                    datos[2] = res.getString(3);
+                    datos[3] = res.getString(4);
+                    datos[4] = res.getString(5) + ":" + res.getString(6); /*Se concatenan los minutos y segundos*/
+                
+                    tabla.addRow(datos);
+                
+                    /*Sumamos consecutivamente los segundos*/
+                    sum_seg = Integer.parseInt(res.getString(6)) + sum_seg; 
+                
+                    /*Si la cantidad de segundos es igual o supera 60
+                    sumamos un minuto y restamos la suma de segundos entre 60*/
+                    if(sum_seg >= 60){
+                        min ++ ; 
+                        sum_seg = sum_seg - 60;                    
+                    }
+                    /*Sumamos consecutivamente los minutos*/
+                    sum_min = Integer.parseInt(res.getString(5)) + sum_min;
+                
+                    /*Sumamos el total de minutos*/
+                    total_min = sum_min + min;
+                }
+            
+                System.out.println("El tiempo total es: " + total_min + ":" + sum_seg);
+                tabla_resultados.setModel(tabla); 
             }
             
-            System.out.println("El tiempo total es: " + total_min + ":" + sum_seg);
-            tabla_resultados.setModel(tabla);
         }catch(SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en " + ex);
         }
