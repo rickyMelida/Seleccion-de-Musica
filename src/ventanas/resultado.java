@@ -86,15 +86,12 @@ public class resultado extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    
-    public class madrugada{
-        
-    }
-    
+   
+    DefaultTableModel tabla = new DefaultTableModel();
         
     
     public void mostrarCanciones() {
-        DefaultTableModel tabla = new DefaultTableModel();
+        
         tabla.addColumn("N°");
         tabla.addColumn("Artista");
         tabla.addColumn("Titulo");
@@ -192,8 +189,10 @@ public class resultado extends javax.swing.JFrame {
         
     }
     
+    
     private void btn_listoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_listoActionPerformed
-        // TODO add your handling code here:
+        tabla.removeRow(0);
+        
     }//GEN-LAST:event_btn_listoActionPerformed
 
     private void btn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_volverActionPerformed
