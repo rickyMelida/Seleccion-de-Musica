@@ -70,14 +70,14 @@ public class resultado extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(btn_listo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btn_quitar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(207, 207, 207)
-                            .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 697, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btn_listo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 697, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -88,11 +88,10 @@ public class resultado extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_listo, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_volver, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                        .addComponent(btn_quitar, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                    .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_quitar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_listo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -131,40 +130,6 @@ public class resultado extends javax.swing.JFrame {
                 Statement st = db.createStatement();
                 ResultSet res = st.executeQuery(ale_sql);
                 
-                
-                switch(total_min){
-                    case 240: {
-                        estilo="Polka";
-                    }
-                    break;
-                    
-                    case 360: {
-                        estilo="Movido";
-                    }
-                    break;
-                    
-                    case 720: {
-                        estilo = "Lento";
-                    }
-                    break;
-                    
-                    case 780: {
-                        estilo = "Lento";
-                    }
-                    break;
-                    
-                    case 900: {
-                        estilo = "Movido";
-                    }
-                    break;
-                    
-                    case 1200: {
-                        estilo = "Movido";
-                    }
-                    break;
-                }
-                
-            
                 /*Se repite extrayendo todos los datos*/
                 while(res.next()) {
                 
@@ -190,11 +155,39 @@ public class resultado extends javax.swing.JFrame {
                 
                     /*Sumamos el total de minutos*/
                     total_min = sum_min + min;
+                    
+                    if(total_min >= 240 && total_min < 360 ) {
+                        estilo="Polka";
+                        System.out.println("Aqui vale " + estilo);
+                    }    
+                    if(total_min >= 360 && total_min < 720){
+                        estilo="Movido";
+                        System.out.println("Aqui vale " + estilo);
+                    }        
+                    
+                    if(total_min >= 720 && total_min < 780){
+                        estilo = "Lento";
+                        System.out.println("Aqui vale " + estilo);
+                    }           
+                    if(total_min >= 780 && total_min < 900){
+                        estilo = "Lento";
+                        System.out.println("Aqui vale " + estilo);
+                    }       
+                    if(total_min >= 900 && total_min < 1200) {
+                        estilo = "Movido";
+                        System.out.println("Aqui vale " + estilo); 
+                    }     
+                    if(total_min >= 1200) {
+                        estilo = "Movido";
+                        System.out.println("Aqui vale " + estilo);
+                    }
+                    
+                    //JOptionPane.showMessageDialog(null, "Ahora vale" + total_min);
                 }
-            
-                System.out.println("El tiempo total es: " + total_min + ":" + sum_seg);
-                tabla_resultados.setModel(tabla); 
+                //System.out.println("El tiempo total es: " + total_min + ":" + sum_seg);
+                 
             }
+            tabla_resultados.setModel(tabla);
             
         }catch(SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en " + ex);
