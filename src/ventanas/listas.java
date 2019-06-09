@@ -341,6 +341,7 @@ public class listas extends javax.swing.JFrame {
         String[] datos = new String[5];
         
         for (int i = 0; i < 5; i++) {
+            //Evalua los datos que contiene la fila seleccionada
             datos[i] = (String)tabla_datos.getValueAt(fila, i);
         }
         
