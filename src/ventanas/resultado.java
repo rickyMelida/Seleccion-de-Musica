@@ -180,11 +180,12 @@ public class resultado extends javax.swing.JFrame {
                     if(total_min >= 1200) {
                         estilo = "Movido";
                         System.out.println("Aqui vale " + estilo);
+                        res.isClosed();
                     }
                     
                     //JOptionPane.showMessageDialog(null, "Ahora vale" + total_min);
                 }
-                //System.out.println("El tiempo total es: " + total_min + ":" + sum_seg);
+                System.out.println("El tiempo total es: " + total_min + ":" + sum_seg);
                  
             }
             tabla_resultados.setModel(tabla);
