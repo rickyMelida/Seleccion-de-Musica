@@ -1,4 +1,6 @@
+import clases.canciones;
 import ventanas.principal;
+
 
 public class main {
   
@@ -8,6 +10,9 @@ public class main {
         princ.setVisible(true);
         princ.setLocationRelativeTo(null);
         princ.setTitle("Seleccion Musical");
+
+
     }
+    
     
 }
