@@ -131,16 +131,17 @@ public class resultado extends javax.swing.JFrame {
                 datos = can.madrugada(estilo, estilo_2);
 
                 tabla.addRow(datos);
-                tiempo = datos[4];
+                tiempo = datos[4];//duracion de la musica seleccionada
 
-                /*Sumamos consecutivamente los segundos*/
+                /*-----------------Definimos todos los posibles casos de los horaios de cancioones
+                para poder desmenuzar los minutos y segundos, ya que estan llegano en formato string----*/
+                
                 if(tiempo.length() == 5 && String.valueOf(tiempo.charAt(2)).equals(":")){
                     segundos = String.valueOf(tiempo.charAt(3)) + String.valueOf(tiempo.charAt(4));
-                    sum_seg = Integer.parseInt(segundos) + sum_seg;
+                    sum_seg = Integer.parseInt(segundos) + sum_seg;//Sumamos consecutivamente los segundos
 
                     minutos = String.valueOf(tiempo.charAt(0)) + String.valueOf(tiempo.charAt(1));
-                    /*Sumamos consecutivamente los minutos*/
-                    sum_min = Integer.parseInt(minutos) + sum_min;
+                    sum_min = Integer.parseInt(minutos) + sum_min;//Sumamos consecutivamente los minutos
                 }
 
                 if(tiempo.length() == 4 && String.valueOf(tiempo.charAt(1)).equals(":")) {
@@ -148,7 +149,6 @@ public class resultado extends javax.swing.JFrame {
                     sum_seg = Integer.parseInt(segundos) + sum_seg;
 
                     minutos = String.valueOf(tiempo.charAt(0));
-                    /*Sumamos consecutivamente los minutos*/
                     sum_min = Integer.parseInt(minutos) + sum_min;
                 }
 
@@ -157,7 +157,6 @@ public class resultado extends javax.swing.JFrame {
                     sum_seg = Integer.parseInt(segundos) + sum_seg;
 
                     minutos = String.valueOf(tiempo.charAt(0));
-                    /*Sumamos consecutivamente los minutos*/
                     sum_min = Integer.parseInt(minutos) + sum_min;
                 }
 
@@ -166,7 +165,6 @@ public class resultado extends javax.swing.JFrame {
                     sum_seg = Integer.parseInt(segundos) + sum_seg;
 
                     minutos = String.valueOf(tiempo.charAt(0) + String.valueOf(tiempo.charAt(1)));
-                    /*Sumamos consecutivamente los minutos*/
                     sum_min = Integer.parseInt(minutos) + sum_min;
                 }
 
