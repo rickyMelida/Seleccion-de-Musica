@@ -124,15 +124,23 @@ public class resultado extends javax.swing.JFrame {
             canciones can = new canciones();
             String tiempo;
             String segundos, minutos;
+            String art_actual, art_ant;
             
             
             while(total_min <= tiempo_total) {
                    
                 datos = can.madrugada(estilo, estilo_2);
-
+                art_ant = datos[1];
                 tabla.addRow(datos);
                 tiempo = datos[4];//duracion de la musica seleccionada
-
+                 
+                if(art_ant.equals(datos[1])) {
+                    System.out.println("Si, son iguales los artistas");
+                }else {
+                    System.out.println("No, no son igules los artistas");
+                }
+                
+                
                 /*-----------------Definimos todos los posibles casos de los horaios de cancioones
                 para poder desmenuzar los minutos y segundos, ya que estan llegano en formato string----*/
                 
