@@ -1,4 +1,5 @@
 package ventanas;
+import clases.canciones;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -111,7 +112,7 @@ public class resultado extends javax.swing.JFrame {
         tabla.addColumn("Duración");
         tabla_resultados.setModel(tabla);
         
-        String [] datos = new String[6];
+        String [] datos ;
         String estilo = "Lento", estilo_2 = "Romantico";
         
         
@@ -123,26 +124,57 @@ public class resultado extends javax.swing.JFrame {
 
         
         try{
+            canciones can = new canciones();
+            String tiempo;
+            String segundos, minutos;
+            
             
             while(total_min <= tiempo_total) {
-                String ale_sql = "SELECT * FROM musicas WHERE estilo = '" + estilo + "' || estilo = '" + estilo_2 + "' ORDER BY RAND()";
-            
-                Statement st = db.createStatement();
-                ResultSet res = st.executeQuery(ale_sql);
-                
-                /*Se repite extrayendo todos los datos*/
-                while(res.next()) {
-                
-                    datos[0] = res.getString(1);
-                    datos[1] = res.getString(2);
-                    datos[2] = res.getString(3);
-                    datos[3] = res.getString(4);
-                    datos[4] = res.getString(5) + ":" + res.getString(6); /*Se concatenan los minutos y segundos*/
-                
+                   
+                    datos = can.madrugada(estilo, estilo_2);
+                    
+                    System.out.println("Es igual a " + datos[4]);
+                    
                     tabla.addRow(datos);
-                
+                    tiempo = datos[4];
+                    
                     /*Sumamos consecutivamente los segundos*/
-                    sum_seg = Integer.parseInt(res.getString(6)) + sum_seg; 
+                    if(tiempo.length() == 5 && String.valueOf(tiempo.charAt(2)).equals(":")){
+                        segundos = String.valueOf(tiempo.charAt(3)) + String.valueOf(tiempo.charAt(4));
+                        sum_seg = Integer.parseInt(segundos) + sum_seg;
+                        
+                        minutos = String.valueOf(tiempo.charAt(0)) + String.valueOf(tiempo.charAt(1));
+                        /*Sumamos consecutivamente los minutos*/
+                        sum_min = Integer.parseInt(minutos) + sum_min;
+                    }
+                    
+                    if(tiempo.length() == 4 && String.valueOf(tiempo.charAt(1)).equals(":")) {
+                        segundos = String.valueOf(tiempo.charAt(2)) + String.valueOf(tiempo.charAt(3));
+                        sum_seg = Integer.parseInt(segundos) + sum_seg;
+                        
+                        minutos = String.valueOf(tiempo.charAt(0));
+                        /*Sumamos consecutivamente los minutos*/
+                        sum_min = Integer.parseInt(minutos) + sum_min;
+                    }
+                    
+                    if(tiempo.length() == 3 && String.valueOf(tiempo.charAt(1)).equals(":")) {
+                        segundos = String.valueOf(tiempo.charAt(2));
+                        sum_seg = Integer.parseInt(segundos) + sum_seg;
+                        
+                        minutos = String.valueOf(tiempo.charAt(0));
+                        /*Sumamos consecutivamente los minutos*/
+                        sum_min = Integer.parseInt(minutos) + sum_min;
+                    }
+                    
+                    if(tiempo.length() == 4 && String.valueOf(tiempo.charAt(2)).equals(":")) {
+                        segundos = String.valueOf(tiempo.charAt(3));
+                        sum_seg = Integer.parseInt(segundos) + sum_seg;
+                        
+                        minutos = String.valueOf(tiempo.charAt(0) + String.valueOf(tiempo.charAt(1)));
+                        /*Sumamos consecutivamente los minutos*/
+                        sum_min = Integer.parseInt(minutos) + sum_min;
+                    }
+                     
                 
                     /*Si la cantidad de segundos es igual o supera 60
                     sumamos un minuto y restamos la suma de segundos entre 60*/
@@ -150,47 +182,39 @@ public class resultado extends javax.swing.JFrame {
                         min ++ ; 
                         sum_seg = sum_seg - 60;                    
                     }
-                    /*Sumamos consecutivamente los minutos*/
-                    sum_min = Integer.parseInt(res.getString(5)) + sum_min;
+                   
                 
                     /*Sumamos el total de minutos*/
                     total_min = sum_min + min;
                     
                     if(total_min >= 240 && total_min < 360 ) {
                         estilo="Polka";
-                        System.out.println("Aqui vale " + estilo);
                     }    
                     if(total_min >= 360 && total_min < 720){
                         estilo="Movido";
-                        System.out.println("Aqui vale " + estilo);
                     }        
                     
                     if(total_min >= 720 && total_min < 780){
                         estilo = "Lento";
-                        System.out.println("Aqui vale " + estilo);
                     }           
                     if(total_min >= 780 && total_min < 900){
                         estilo = "Lento";
-                        System.out.println("Aqui vale " + estilo);
                     }       
                     if(total_min >= 900 && total_min < 1200) {
                         estilo = "Movido";
-                        System.out.println("Aqui vale " + estilo); 
                     }     
                     if(total_min >= 1200) {
                         estilo = "Movido";
-                        System.out.println("Aqui vale " + estilo);
-                        res.isClosed();
                     }
                     
                     //JOptionPane.showMessageDialog(null, "Ahora vale" + total_min);
-                }
+                //}
                 System.out.println("El tiempo total es: " + total_min + ":" + sum_seg);
                  
             }
             tabla_resultados.setModel(tabla);
             
-        }catch(SQLException ex) {
+        }catch(Exception ex) {
             JOptionPane.showMessageDialog(null, "Error en " + ex);
         }
         
