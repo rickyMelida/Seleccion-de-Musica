@@ -115,7 +115,7 @@ public class resultado extends javax.swing.JFrame {
         String [] datos ;
         String estilo = "Lento", estilo_2 = "Romantico";
        
-        int tiempo_total = 30;/*Esto correspomderia a 23hs 50min - 1430*/
+        int tiempo_total = 1430;/*Esto correspomderia a 23hs 50min */
         
         int sum_seg = 0, sum_min = 0, min = 0, total_min = 0;
 
@@ -125,7 +125,7 @@ public class resultado extends javax.swing.JFrame {
             String tiempo;
             String segundos = "", minutos = "";
             String art_actual = "", art_ant = "", art_ant2 = "";
-            int cont = 0;
+            int cont = 0, fila = 0;
             
             
             while(total_min <= tiempo_total) {
@@ -139,9 +139,8 @@ public class resultado extends javax.swing.JFrame {
                 tabla.addRow(datos);
                 tiempo = datos[4];//duracion de la musica seleccionada
                 
-                System.out.println("El artista actual es: " + art_actual + " y el anterior: " + art_ant);
                 
-/*----------------------------------------------------------------------------------------------------------*/                
+/*------------------------------------------------------------------------------------------------------------*/                
                 /*-----------------Definimos todos los posibles casos de los horaios de cancioones
                 para poder desmenuzar los minutos y segundos, ya que estan llegano en formato string----*/
                 
@@ -183,15 +182,15 @@ public class resultado extends javax.swing.JFrame {
                 sumamos un minuto y restamos la suma de segundos entre 60*/
                 if(sum_seg >= 60){
                     min ++ ; 
-                    sum_seg = sum_seg - 60;                    
+                    sum_seg -= 60;                    
                 }
 
 
                 /*Sumamos el total de minutos*/
                 total_min = sum_min + min;
                 
-/*-------------------------------------------------------------------------------------------------------------*/
-                /*Condiciones para selecionar los estilos de musica de acuerdo al horario*/
+
+/*-------------Condiciones para selecionar los estilos de musica de acuerdo al horario-------------------------*/
                 if(total_min >= 240 && total_min < 360 ) {
                     estilo = "Polka";
                     estilo_2 = "";
@@ -220,16 +219,35 @@ public class resultado extends javax.swing.JFrame {
                     estilo_2 = "Movido";
                 }
                
-/*-----------------------------------------------------------------------------------------------------------*/                
-                /*Condicional para evitar que se repitan tres veces las musicas*/
+                
+/*--------------Condicional para evitar que se repitan tres veces las musicas--------------------------------*/
                 if(cont <= 180 && art_ant2.equals(art_actual)) {
-                    //tabla.rowsRemoved();
+                    int seg = Integer.parseInt(segundos);
+                    
+                    total_min -= Integer.parseInt(minutos);
+                    
+                    if(sum_seg < seg) {
+                        total_min -= 1;
+                        seg += 60;
+                    }
+                    sum_seg -= seg;
+                    tabla.removeRow(fila);
                 }
+                
+/*--------------Si se llega a los 180(minutos, correspondiente a las tres horas de condion para ---------------
+  --------------que no se repita las musicas) el contador vuelve a cero--------------------------*/
+                if(cont > 180){
+                    cont = 0;
+                }
+                
+/*---------------------------Sumamos uno mas la fila que se añade----------------------------------*/
+                fila ++;
             }
+            
+/*----------Agregamos la tabla(Model table) a la tabla del jframe----------------------------------*/            
             tabla_resultados.setModel(tabla);
             System.out.println("El tiempo total es: " + total_min + ":" + sum_seg);
-            
-            
+           
             
         }catch(Exception ex) {
             JOptionPane.showMessageDialog(null, "Error en " + ex);
