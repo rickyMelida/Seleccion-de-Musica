@@ -115,7 +115,7 @@ public class resultado extends javax.swing.JFrame {
         String [] datos ;
         String estilo = "Lento", estilo_2 = "Romantico";
        
-        int tiempo_total = 1430;/*Esto correspomderia a 23hs 50min*/
+        int tiempo_total = 30;/*Esto correspomderia a 23hs 50min - 1430*/
         
         int sum_seg = 0, sum_min = 0, min = 0, total_min = 0;
 
@@ -123,24 +123,25 @@ public class resultado extends javax.swing.JFrame {
         try{
             canciones can = new canciones();
             String tiempo;
-            String segundos, minutos;
-            String art_actual, art_ant;
+            String segundos = "", minutos = "";
+            String art_actual = "", art_ant = "", art_ant2 = "";
+            int cont = 0;
             
             
             while(total_min <= tiempo_total) {
-                   
                 datos = can.madrugada(estilo, estilo_2);
-                art_ant = datos[1];
+                
+                art_ant2 = art_ant;
+                art_ant = art_actual;
+                art_actual = datos[1];
+                
+                cont = total_min;
                 tabla.addRow(datos);
                 tiempo = datos[4];//duracion de la musica seleccionada
-                 
-                if(art_ant.equals(datos[1])) {
-                    System.out.println("Si, son iguales los artistas");
-                }else {
-                    System.out.println("No, no son igules los artistas");
-                }
                 
+                System.out.println("El artista actual es: " + art_actual + " y el anterior: " + art_ant);
                 
+/*----------------------------------------------------------------------------------------------------------*/                
                 /*-----------------Definimos todos los posibles casos de los horaios de cancioones
                 para poder desmenuzar los minutos y segundos, ya que estan llegano en formato string----*/
                 
@@ -176,7 +177,8 @@ public class resultado extends javax.swing.JFrame {
                     sum_min = Integer.parseInt(minutos) + sum_min;
                 }
 
-
+/*----------------------------------------------------------------------------------------------------------*/
+                
                 /*Si la cantidad de segundos es igual o supera 60
                 sumamos un minuto y restamos la suma de segundos entre 60*/
                 if(sum_seg >= 60){
@@ -187,7 +189,9 @@ public class resultado extends javax.swing.JFrame {
 
                 /*Sumamos el total de minutos*/
                 total_min = sum_min + min;
-
+                
+/*-------------------------------------------------------------------------------------------------------------*/
+                /*Condiciones para selecionar los estilos de musica de acuerdo al horario*/
                 if(total_min >= 240 && total_min < 360 ) {
                     estilo = "Polka";
                     estilo_2 = "";
@@ -215,9 +219,17 @@ public class resultado extends javax.swing.JFrame {
                     estilo = "Predica";
                     estilo_2 = "Movido";
                 }
+               
+/*-----------------------------------------------------------------------------------------------------------*/                
+                /*Condicional para evitar que se repitan tres veces las musicas*/
+                if(cont <= 180 && art_ant2.equals(art_actual)) {
+                    //tabla.rowsRemoved();
+                }
             }
             tabla_resultados.setModel(tabla);
             System.out.println("El tiempo total es: " + total_min + ":" + sum_seg);
+            
+            
             
         }catch(Exception ex) {
             JOptionPane.showMessageDialog(null, "Error en " + ex);
