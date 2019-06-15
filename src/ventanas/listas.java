@@ -336,6 +336,7 @@ public class listas extends javax.swing.JFrame {
         modificar.setSize(370,340);
         modificar.setVisible(true);
         modificar.setLocationRelativeTo(null);
+        modificar.setTitle("Modificar Canción");
         
         int fila = tabla_datos.getSelectedRow();
         String[] datos = new String[5];
