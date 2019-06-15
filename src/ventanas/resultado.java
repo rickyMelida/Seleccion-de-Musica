@@ -221,17 +221,21 @@ public class resultado extends javax.swing.JFrame {
                
                 
 /*--------------Condicional para evitar que se repitan tres veces las musicas--------------------------------*/
-                if(cont <= 180 && art_ant2.equals(art_actual)) {
+                if(cont < 180 && art_actual.equals(art_ant2)) {
                     int seg = Integer.parseInt(segundos);
+                    int minu = Integer.parseInt(minutos);
+                    System.out.println("Se detecto musica repetida, de duracion " + minutos + ":" + segundos);
+                    System.out.println(" a los " + cont + " minutos, la fila es " + fila);
                     
-                    total_min -= Integer.parseInt(minutos);
+                    total_min -= minu;
                     
                     if(sum_seg < seg) {
                         total_min -= 1;
                         seg += 60;
                     }
                     sum_seg -= seg;
-                    tabla.removeRow(fila);
+                    //tabla.removeRow(fila);
+                    
                 }
                 
 /*--------------Si se llega a los 180(minutos, correspondiente a las tres horas de condion para ---------------
@@ -242,10 +246,13 @@ public class resultado extends javax.swing.JFrame {
                 
 /*---------------------------Sumamos uno mas la fila que se añade----------------------------------*/
                 fila ++;
+                
+                          tabla_resultados.setModel(tabla);
+  
             }
             
 /*----------Agregamos la tabla(Model table) a la tabla del jframe----------------------------------*/            
-            tabla_resultados.setModel(tabla);
+            //tabla_resultados.setModel(tabla);
             System.out.println("El tiempo total es: " + total_min + ":" + sum_seg);
            
             
