@@ -93,7 +93,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btn_ver">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ver Todo"/>
+        <Property name="text" type="java.lang.String" value="Ver Canciones"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_verActionPerformed"/>
