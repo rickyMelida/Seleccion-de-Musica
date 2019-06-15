@@ -407,6 +407,7 @@ public class listas extends javax.swing.JFrame {
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null, "Se modificó la cancion correctamente");
             mostrarCanciones("", "");
+            modificar.dispose();
             
         } catch (SQLException ex) {
             //java.util.logging.Logger.getLogger(listas.class.getName()).log(Level.SEVERE, null, ex);
