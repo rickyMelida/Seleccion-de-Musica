@@ -1,5 +1,7 @@
 package ventanas;
 
+import java.io.File;
+
 /**
  *
  * @author ricky
@@ -133,6 +135,8 @@ public class principal extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btn_aleatorioActionPerformed
 
+
+    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
