@@ -10,6 +10,9 @@ public class conectar {
     Connection conectar = null;
     
     public Connection conexion(){
+        String url = "jdbc:mysql://db4free.net:3306/radio_panambi";
+        String usuario = "ricky_melida";
+        String pass = "5181789781Ri-";
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conectar = DriverManager.getConnection("jdbc:mysql://localhost/radio", "root", "");
